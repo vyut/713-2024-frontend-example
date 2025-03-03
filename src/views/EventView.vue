@@ -5,5 +5,8 @@ import EventCard from '@/components/EventCard.vue'
 <template>
   <div>
     <EventCard />
+    <EventCard />
+
+    <EventCard />
   </div>
 </template>
