@@ -9,7 +9,14 @@ const events = ref([
 </script>
 
 <template>
-  <div>
+  <div class="events">
     <EventCard v-for="event in events" :key="event.id" />
   </div>
 </template>
+<style scoped>
+.events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>
