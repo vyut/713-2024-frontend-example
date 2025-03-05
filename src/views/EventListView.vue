@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EventCard from '@/components/EventCard.vue'
 import eventService from '@/services/EventService'
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import type { Event } from '@/types'
 const events = ref<Event[]>([])
 interface Props {
@@ -9,7 +9,16 @@ interface Props {
 }
 const props = defineProps<Props>()
 const page = computed(() => props.page)
-
+watchEffect(() => {
+  eventService
+    .getEvents(page.value, 2)
+    .then((response) => {
+      events.value = response.data
+    })
+    .catch((error) => {
+      console.error('There was an error!', error)
+    })
+})
 eventService.getEvents(page.value, 2).then((response) => {
   events.value = response.data
 })
