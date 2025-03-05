@@ -5,7 +5,7 @@ defineProps<{ event: Event }>()
 </script>
 
 <template>
-  <RouterLink to="/event/12">
+  <RouterLink :to="{ name: 'event-detail-view', params: { id: event.id } }">
     <div class="event-card">
       <h2>{{ event.title }}</h2>
       <p>{{ event.description }}</p>
