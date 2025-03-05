@@ -8,7 +8,7 @@ const router = useRouter()
 const events = ref<Event[]>([])
 const totalEvents = ref(0)
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvents.value / 2)
+  const totalPages = Math.ceil(totalEvents.value / 4)
   return page.value < totalPages
 })
 interface Props {
@@ -18,7 +18,7 @@ const props = defineProps<Props>()
 const page = computed(() => props.page)
 watchEffect(() => {
   eventService
-    .getEvents(page.value, 2)
+    .getEvents(page.value, 4)
     .then((response) => {
       events.value = response.data
       totalEvents.value = response.headers['x-total-count']
@@ -27,7 +27,7 @@ watchEffect(() => {
       router.push({ name: 'network-error-view' })
     })
 })
-eventService.getEvents(page.value, 2).then((response) => {
+eventService.getEvents(page.value, 4).then((response) => {
   events.value = response.data
 })
 </script>
