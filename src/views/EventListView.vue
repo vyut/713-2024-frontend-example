@@ -4,6 +4,7 @@ import eventService from '@/services/EventService'
 import { ref, computed, watchEffect } from 'vue'
 import type { Event } from '@/types'
 import { useRouter } from 'vue-router'
+import nProgress from 'nprogress'
 const router = useRouter()
 const events = ref<Event[]>([])
 const totalEvents = ref(0)
@@ -20,11 +21,15 @@ watchEffect(() => {
   eventService
     .getEvents(page.value, 2)
     .then((response) => {
+      nProgress.start()
       events.value = response.data
       totalEvents.value = response.headers['x-total-count']
     })
     .catch(() => {
       router.push({ name: 'network-error-view' })
+    })
+    .finally(() => {
+      nProgress.done()
     })
 })
 eventService.getEvents(page.value, 2).then((response) => {
