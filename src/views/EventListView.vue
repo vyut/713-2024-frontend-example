@@ -5,7 +5,10 @@ import { ref, computed, watchEffect } from 'vue'
 import type { Event } from '@/types'
 const events = ref<Event[]>([])
 const totalEvents = ref(0)
-
+const hasNextPage = computed(() => {
+  const totalPages = Math.ceil(totalEvents.value / 2)
+  return page.value < totalPages
+})
 interface Props {
   page: number
 }
@@ -44,6 +47,7 @@ eventService.getEvents(page.value, 2).then((response) => {
         id="page-next"
         :to="{ name: 'event-list-view', query: { page: page + 1 } }"
         rel="next"
+        v-if="hasNextPage"
         >Next Page</RouterLink
       >
     </div>
