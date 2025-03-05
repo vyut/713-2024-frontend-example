@@ -91,6 +91,9 @@ const router = createRouter({
       component: NotFoundView,
     },
   ],
+  scrollBehavior() {
+    return { top: 0 }
+  },
 })
 
 router.beforeEach(() => {
