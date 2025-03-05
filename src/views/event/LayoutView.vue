@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import type { Event } from '@/types'
 import eventService from '@/services/EventService'
+import { useRouter } from 'vue-router'
 const event = ref<Event>()
 const props = defineProps<{ id: string }>()
 const id = Number(props.id)
+const router = useRouter()
 eventService
   .getEvent(id)
   .then((response) => {
@@ -12,6 +14,7 @@ eventService
   })
   .catch((error) => {
     console.error('There was an error!', error)
+    router.push({ name: '404-resource-view', params: { resource: 'event' } })
   })
 </script>
 <template>
