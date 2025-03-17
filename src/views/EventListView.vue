@@ -4,6 +4,7 @@ import eventService from '@/services/EventService'
 import { ref, computed, watchEffect } from 'vue'
 import type { Event } from '@/types'
 import { useRouter } from 'vue-router'
+
 const router = useRouter()
 const events = ref<Event[]>([])
 const totalEvents = ref(0)
@@ -11,9 +12,11 @@ const hasNextPage = computed(() => {
   const totalPages = Math.ceil(totalEvents.value / 3)
   return page.value < totalPages
 })
+
 interface Props {
   page: number
 }
+
 const props = defineProps<Props>()
 const page = computed(() => props.page)
 watchEffect(() => {
@@ -55,6 +58,7 @@ eventService.getEvents(page.value, 3).then((response) => {
     </div>
   </div>
 </template>
+
 <style scoped>
 .events {
   display: flex;

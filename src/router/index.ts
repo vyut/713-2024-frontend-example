@@ -9,6 +9,8 @@ import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import nProgress from 'nprogress'
 import eventService from '@/services/EventService'
 import { useEventStore } from '@/stores/event'
+import LoginView from '@/views/LoginView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -78,6 +80,11 @@ const router = createRouter({
       path: '/network-error',
       name: 'network-error-view',
       component: NetworkErrorView,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
     },
     {
       path: '/404/:resource',
