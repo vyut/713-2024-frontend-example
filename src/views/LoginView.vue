@@ -6,8 +6,12 @@ import InputText from '@/components/InputText.vue'
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
+import { useMessageStore } from '@/stores/message'
 
 const authStore = useAuthStore()
+const router = useRouter()
+const messageStore = useMessageStore()
 
 const validationSchema = yup.object({
   email: yup.string().required('The email is required').email('Input must be an email.'),
@@ -28,14 +32,22 @@ const { value: password } = useField<string>('password')
 // const onSubmit = handleSubmit((values) => {
 //   console.log(values)
 // })
-const onSubmit = handleSubmit(async (values) => {
+// const onSubmit = handleSubmit(async (values) => {
+const onSubmit = handleSubmit(async (values: { email: string; password: string }) => {
   // const response = await authStore.login(values.email, values.password)
   // console.log(response.data.access_token)
   try {
-    const response = await authStore.login(values.email, values.password)
-    console.log(response.data.access_token)
+    // const response = await authStore.login(values.email, values.password)
+    // console.log(response.data.access_token)
+    await authStore.login(values.email, values.password)
+    router.push({ name: 'event-list-view' })
   } catch {
-    console.log('unauthorized')
+    // console.log('unauthorized')
+    messageStore.updateMessage('Could not login')
+    setTimeout(() => {
+      messageStore.resetMessage()
+    }, 3000)
+
   }
 
 })
