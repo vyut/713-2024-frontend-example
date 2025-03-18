@@ -21,6 +21,19 @@ function logout() {
   authStore.logout()
   router.push({ name: 'login' })
 }
+const token = localStorage.getItem('token')
+const user = localStorage.getItem('user')
+
+if (token && user) {
+  // console.log('App.vue: token and user found in localStorage')
+  // console.log('App.vue: token:', token)
+  // console.log('App.vue: user:', user)
+
+  authStore.reload(token,JSON.parse(user))
+} else{
+  authStore.logout()
+}
+
 </script>
 
 <template>
@@ -47,7 +60,7 @@ function logout() {
           </router-link>
         </li>
       </ul>
-      
+
       <ul v-if="authStore.currentUserName" class="flex navbar-nav ml-auto">
         <li class="nav-item px-2">
           <router-link to="/profile" class="nav-link">
