@@ -25,10 +25,6 @@ const token = localStorage.getItem('token')
 const user = localStorage.getItem('user')
 
 if (token && user) {
-  // console.log('App.vue: token and user found in localStorage')
-  // console.log('App.vue: token:', token)
-  // console.log('App.vue: user:', user)
-
   authStore.reload(token,JSON.parse(user))
 } else{
   authStore.logout()
@@ -84,6 +80,7 @@ if (token && user) {
       <nav>
         <RouterLink :to="{ name: 'event-list-view' }">Event</RouterLink> |
         <RouterLink :to="{ name: 'about' }">About</RouterLink>
+        <span v-if="authStore.isAdmin"> | <RouterLink to="/admin">Admin</RouterLink></span>
       </nav>
     </div>
   </header>

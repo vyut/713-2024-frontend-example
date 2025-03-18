@@ -31,3 +31,10 @@ export interface MessageState {
 export interface EventState {
   event: Event | null
 }
+
+export type User = {
+  id?: number
+  username: string
+  events: Event[]
+  roles: string[]
+}
